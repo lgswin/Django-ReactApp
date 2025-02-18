@@ -9,82 +9,31 @@ on:
       - main
 
 jobs:
-  backend:
-    name: Backend - Django Tests
-    runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:13
-        env:
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: test_db
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install Dependencies
-        run: |
-          cd backend
-          python -m venv venv
-          source venv/bin/activate
-          pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run Migrations
-        env:
-          DATABASE_URL: postgresql://user:password@localhost:5432/test_db
-        run: |
-          cd backend
-          source venv/bin/activate
-          python manage.py migrate
-
-      - name: Run Tests
-        env:
-          DATABASE_URL: postgresql://user:password@localhost:5432/test_db
-        run: |
-          cd backend
-          source venv/bin/activate
-          python manage.py test
-
-  frontend:
-    name: Frontend - React Build and Lint
+  build-and-test:
+    name: Build & Test with Docker Compose
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
+      - name: Set up Docker Compose
+        run: docker compose up -d --build
 
-      - name: Install Dependencies
-        run: |
-          cd frontend
-          npm install
+      - name: Wait for Services to Start
+        run: sleep 15
 
-      - name: Lint Check
-        run: |
-          cd frontend
-          npm run lint
+      - name: Check Running Containers
+        run: docker ps
 
-      - name: Build React App
-        run: |
-          cd frontend
-          npm run build
+      - name: Run Django Migrations
+        run: docker compose exec backend python manage.py migrate
+
+      - name: Run Django Tests
+        run: docker compose exec backend python manage.py test
+
+      - name: Run Frontend Build
+        run: docker compose exec frontend npm run build
+
+      - name: Tear Down Docker Containers
+        run: docker compose down
