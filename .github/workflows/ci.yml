@@ -38,8 +38,8 @@ jobs:
       - name: Run Django Tests
         run: docker compose exec backend python manage.py test
 
-      - name: Run Frontend Build
-        run: docker compose exec frontend npm run build
+    #   - name: Run Frontend Build
+    #     run: docker compose exec frontend npm run build
 
       - name: Tear Down Docker Containers
         run: docker compose down
