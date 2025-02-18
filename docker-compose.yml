@@ -27,7 +27,7 @@ services:
       - ./backend:/app
     depends_on:
       db:
-        condition: service_healthy  # ✅ PostgreSQL이 완전히 실행될 때까지 Django 대기
+        condition: service_healthy  # Wait for PostgreSQL
     environment:
       - DATABASE_URL=postgres://user:password@db:5432/todo_db
       - DEBUG=True

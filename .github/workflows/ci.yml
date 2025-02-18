@@ -23,7 +23,7 @@ jobs:
       - name: Wait for Services to Start
         run: |
           echo "Waiting for PostgreSQL to be ready..."
-          sleep 20  # ✅ PostgreSQL이 완전히 실행될 때까지 기다림
+          sleep 20  # waiting for PostgreSQL running
           docker compose exec db pg_isready -U user
 
       - name: Check Running Containers
