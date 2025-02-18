@@ -84,16 +84,16 @@ git clone https://github.com/lgswin/Django-ReactApp.git
 cd django-react-todo
 ```
 
-1. **Start the application using Docker Compose**
+2. **Start the application using Docker Compose**
 
 ```
 docker compose up --build
 ```
 
-1. **Access the application**
+3. **Access the application**
 - Frontend: Open [http://localhost:3000](http://localhost:3000/) in your browser.
 - Backend API: Open http://localhost:8000/api/todos/.
-1. **Run backend unit tests**
+4. **Run backend unit tests**
 
 ```
 cd backend
