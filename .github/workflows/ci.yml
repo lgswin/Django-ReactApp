@@ -24,7 +24,10 @@ jobs:
         run: sleep 15
 
       - name: Check Running Containers
-        run: docker ps
+        run: docker ps -a
+
+      - name:
+        run: docker logs django-backend
 
       - name: Run Django Migrations
         run: docker compose exec backend python manage.py migrate
