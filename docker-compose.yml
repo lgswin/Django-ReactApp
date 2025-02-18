@@ -1,27 +1,6 @@
 version: '3.8'
 
 services:
-  backend:
-    build: ./backend
-    container_name: django-todo-app
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./backend:/app
-    depends_on:
-      - db
-    environment:
-      - DATABASE_URL=postgres://user:password@db:5432/todo_db
-      - DEBUG=True
-
-  frontend:
-    build: ./frontend
-    container_name: react-frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
-
   db:
     image: postgres:13
     container_name: postgres-db
@@ -34,6 +13,32 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: django-todo-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy  # ✅ PostgreSQL이 완전히 실행될 때까지 Django 대기
+    environment:
+      - DATABASE_URL=postgres://user:password@db:5432/todo_db
+      - DEBUG=True
+
+  frontend:
+    build: ./frontend
+    container_name: react-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
 
 volumes:
   pgdata:

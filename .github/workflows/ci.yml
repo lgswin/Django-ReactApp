@@ -21,7 +21,10 @@ jobs:
         run: docker compose up -d --build
 
       - name: Wait for Services to Start
-        run: sleep 15
+        run: |
+          echo "Waiting for PostgreSQL to be ready..."
+          sleep 20  # ✅ PostgreSQL이 완전히 실행될 때까지 기다림
+          docker-compose exec db pg_isready -U user
 
       - name: Check Running Containers
         run: docker ps -a
