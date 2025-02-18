@@ -130,6 +130,7 @@ This project is integrated with **GitHub Actions** to automate:
 ### **Manually Checking Pushed Images**
 
 You can verify the pushed images in **Docker Hub > Repositories**.
+![dockerImages](https://github.com/user-attachments/assets/c3a7757f-bbab-4829-84d2-83a24b69f61f)
 
 ---
 
