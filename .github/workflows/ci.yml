@@ -27,7 +27,7 @@ jobs:
         run: docker ps -a
 
       - name:
-        run: docker logs django-backend
+        run: docker logs django-todo-app
 
       - name: Run Django Migrations
         run: docker compose exec backend python manage.py migrate
