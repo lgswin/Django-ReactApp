@@ -41,3 +41,22 @@ class TodoModelTestCase(TestCase):
         self.assertEqual(retrieved_todo.title, "Test Todo")
         self.assertEqual(retrieved_todo.description, "This is a test todo item")
         self.assertFalse(retrieved_todo.completed)
+        
+
+
+    def test_toggle_complete(self):
+        """ Test if toggle_complete() correctly updates completed status """
+        self.todo.toggle_complete()
+        self.assertTrue(self.todo.completed)  # `completed` 상태가 True로 변경되었는지 확인
+
+        self.todo.toggle_complete()
+        self.assertFalse(self.todo.completed)  # 다시 실행했을 때 False로 변경되는지 확인
+
+    def test_get_summary(self):
+        """ Test if get_summary() returns the correct format """
+        summary = self.todo.get_summary()
+        self.assertEqual(summary, "Test Todo - Not Completed")  # 초기 상태 확인
+
+        self.todo.toggle_complete()
+        summary = self.todo.get_summary()
+        self.assertEqual(summary, "Test Todo - Completed")  # 상태 변경 후 확인
