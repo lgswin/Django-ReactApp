@@ -28,7 +28,7 @@ This project is a **full-stack Todo application** built with:
 - two tests fail
 ![Screenshot 2025-02-18 at 10 57 26 PM](https://github.com/user-attachments/assets/6ff2d8b8-b27f-401e-82bc-691eb41f9c63)
 - if the functionalities are implemented, All tests pass.
-
+![Screenshot 2025-02-18 at 11 04 35 PM](https://github.com/user-attachments/assets/4e02be56-0eb5-49eb-8ac7-15ee90e20395)
 
 ### **2. Frontend (React)**
 
