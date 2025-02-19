@@ -152,7 +152,7 @@ You can verify the pushed images in **Docker Hub > Repositories**.
 
 ## + **Jenkins CI/CD Pipeline Integration**
 
-In addition to **GitHub Actions**, this project also integrates a **Jenkins CI/CD pipeline** for automated builds, testing, and deployment.
+In addition to **GitHub Actions**, this project also integrates a **Jenkins CI/CD pipeline** for automated builds and testing.
 
 **Jenkins Setup on Azure**
 
