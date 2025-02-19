@@ -100,8 +100,7 @@ docker compose up --build
 4. **Run backend unit tests**
 
 ```
-cd backend
-python manage.py test
+docker compose exec backend python manage.py test
 ```
 
 ---
