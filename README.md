@@ -25,6 +25,10 @@ This project is a **full-stack Todo application** built with:
 - Provides an **Admin panel** for database management.
 - Uses **PostgreSQL** as the database.
 - Includes **unit tests** for API functionality.
+- two tests fail
+![Screenshot 2025-02-18 at 10 57 26 PM](https://github.com/user-attachments/assets/6ff2d8b8-b27f-401e-82bc-691eb41f9c63)
+- if the functionalities are implemented, All tests pass.
+
 
 ### **2. Frontend (React)**
 
