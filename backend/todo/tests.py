@@ -34,3 +34,10 @@ class TodoModelTestCase(TestCase):
         self.todo.delete()
         with self.assertRaises(Todo.DoesNotExist):
             Todo.objects.get(id=todo_id)
+            
+    def test_todo_retrieval(self):
+        """ Test if the Todo object can be retrieved from the database """
+        retrieved_todo = Todo.objects.get(id=self.todo.id)
+        self.assertEqual(retrieved_todo.title, "Test Todo")
+        self.assertEqual(retrieved_todo.description, "This is a test todo item")
+        self.assertFalse(retrieved_todo.completed)
