@@ -28,7 +28,9 @@ This project is a **full-stack Todo application** built with:
 - Includes **unit tests** for API functionality.
 - two tests fail  
 <img src="https://github.com/user-attachments/assets/6ff2d8b8-b27f-401e-82bc-691eb41f9c63" width="500" alt="unit tests fail">
+
 - if the functionalities are implemented, All tests pass.  
+
 <img src="https://github.com/user-attachments/assets/4e02be56-0eb5-49eb-8ac7-15ee90e20395" width="500" alt="all tests pass">
 
 ### **2. Frontend (React)**
