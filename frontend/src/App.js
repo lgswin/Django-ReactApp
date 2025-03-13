@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Modal from "./components/Modal";
-import { getTodos, createTodo, updateTodo, deleteTodo } from "./Api"; // ✅ API 함수 import
+import { getTodos, createTodo, updateTodo, deleteTodo } from "./Api"; // Import API functions
 
 class App extends Component {
   constructor(props) {
@@ -17,14 +17,14 @@ class App extends Component {
     };
   }
 
-  // ✅ Todo 목록 불러오기
+  // Load Todo list
   componentDidMount() {
     this.refreshList();
   }
 
   refreshList = async () => {
     try {
-      const data = await getTodos(); // ✅ API 함수 사용
+      const data = await getTodos(); // Use API functions
       this.setState({ todoList: data });
     } catch (err) {
       console.log("Error fetching todos:", err);
@@ -35,29 +35,40 @@ class App extends Component {
     this.setState({ modal: !this.state.modal });
   };
 
-  // ✅ Todo 생성 또는 수정
+  // Create or update a Todo item
   handleSubmit = async (item) => {
     this.toggle();
 
     try {
       if (item.id) {
-        await updateTodo(item.id, item); // ✅ API 함수 사용
+        await updateTodo(item.id, item); // Use API functions
       } else {
-        await createTodo(item); // ✅ API 함수 사용
+        await createTodo(item); // Use API functions
       }
-      this.refreshList(); // ✅ 목록 새로고침
+      this.refreshList(); // Refresh list
     } catch (err) {
       console.log("Error saving todo:", err);
     }
   };
 
-  // ✅ Todo 삭제
+  // Delete a Todo item
   handleDelete = async (item) => {
     try {
-      await deleteTodo(item.id); // ✅ API 함수 사용
+      await deleteTodo(item.id); // Use API functions
       this.refreshList();
     } catch (err) {
       console.log("Error deleting todo:", err);
+    }
+  };
+
+  toggleComplete = async (item) => {
+    const updatedItem = { ...item, completed: !item.completed };
+    
+    try {
+      await updateTodo(updatedItem.id, updatedItem); // Update the backend
+      this.refreshList(); // Refresh UI
+    } catch (err) {
+      console.log("Error updating todo:", err);
     }
   };
 
@@ -94,16 +105,23 @@ class App extends Component {
   };
 
   renderItems = () => {
-    const { viewCompleted, todoList } = this.state;
-    const newItems = todoList.filter((item) => item.completed === viewCompleted);
+    const { todoList } = this.state;
+    const newItems = todoList;
 
     return newItems.map((item) => (
       <li
         key={item.id}
         className="list-group-item d-flex justify-content-between align-items-center"
       >
+        <input
+          type="checkbox"
+          className="mr-2"
+          checked={item.completed}
+          onChange={() => this.toggleComplete(item)}
+        />
         <span
-          className={`todo-title mr-2 ${this.state.viewCompleted ? "completed-todo" : ""}`}
+          className={`todo-title mr-2 text-left ${item.completed ? "completed-todo" : ""}`}
+          style={{ textDecoration: item.completed ? "line-through" : "none", flex: 1 }}
           title={item.description}
         >
           {item.title}

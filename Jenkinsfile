@@ -46,4 +46,22 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            emailext (
+                to: 'your-email@yourcollege.edu',
+                subject: "Jenkins Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "The build was successful.\n\nCheck details: ${env.BUILD_URL}"
+            )
+        }
+
+        failure {
+            emailext (
+                to: 'your-email@yourcollege.edu',
+                subject: "Jenkins Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "The build failed.\n\nCheck details: ${env.BUILD_URL}"
+            )
+        }
+    }
 }

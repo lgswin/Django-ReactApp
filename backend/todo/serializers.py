@@ -4,4 +4,4 @@ from .models import Todo
 class TodoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
-        fields = "__all__"  # ✅ 모든 필드를 허용
+        fields = "__all__" 

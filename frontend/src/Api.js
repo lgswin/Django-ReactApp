@@ -1,10 +1,10 @@
 import axios from "axios";
 
-// ✅ Django 백엔드 API URL 설정 (Docker 환경에서는 "http://django-todo-app:8000" 사용 가능)
-const API_BASE_URL = "http://localhost:8000"; // 로컬 개발 환경
-// const API_BASE_URL = "http://django-todo-app:8000"; // Docker Compose 내부 네트워크
+// Set Django backend API URL (Use "http://django-todo-app:8000" in a Docker environment)
+const API_BASE_URL = "http://localhost:8000"; // Local development environment
+// const API_BASE_URL = "http://django-todo-app:8000"; // Docker Compose internal network
 
-// CSRF 토큰 가져오기
+// Get CSRF token
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -20,9 +20,9 @@ function getCookie(name) {
   return cookieValue;
 }
 
-// ✅ Axios 기본 설정
+// Axios default configuration
 const api = axios.create({
-  baseURL: API_BASE_URL, // Django API의 기본 URL 설정
+  baseURL: API_BASE_URL, // Set the base URL for the Django API
   withCredentials: true,
   headers: {
     "X-CSRFToken": getCookie("csrftoken"),
@@ -30,7 +30,7 @@ const api = axios.create({
   },
 });
 
-// ✅ Todo 목록 가져오기
+// Fetch the list of todos
 export const getTodos = async () => {
   try {
     const response = await api.get("/api/todos/");
@@ -41,7 +41,7 @@ export const getTodos = async () => {
   }
 };
 
-// ✅ Todo 생성
+// Create a new todo
 export const createTodo = async (item) => {
   try {
     const response = await api.post("/api/todos/", item);
@@ -52,7 +52,7 @@ export const createTodo = async (item) => {
   }
 };
 
-// ✅ Todo 업데이트
+// Update a todo
 export const updateTodo = async (id, item) => {
   try {
     const response = await api.put(`/api/todos/${id}/`, item);
@@ -63,7 +63,7 @@ export const updateTodo = async (id, item) => {
   }
 };
 
-// ✅ Todo 삭제
+// Delete a todo
 export const deleteTodo = async (id) => {
   try {
     await api.delete(`/api/todos/${id}/`);
