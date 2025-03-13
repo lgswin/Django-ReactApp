@@ -53,11 +53,17 @@ post {
             echo "Build successful - attempting to send email"
         }
         emailext (
-            recipientProviders: [developers()],
+            recipientProviders: [culprits(), developers()],
             to: 'lgswin@gmail.com',
-            replyTo: 'lgswin@gmail.com',
+            replyTo: 'noreply@yourdomain.com',
             subject: "Jenkins Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: "The build was successful.\n\nCheck details: ${env.BUILD_URL}"
+            body: """
+            The build was successful.
+
+            - Job: ${env.JOB_NAME}
+            - Build Number: ${env.BUILD_NUMBER}
+            - Build URL: ${env.BUILD_URL}
+            """
         )
     }
 
@@ -66,11 +72,18 @@ post {
             echo "Build failed - attempting to send email"
         }
         emailext (
-            recipientProviders: [developers()],
+            recipientProviders: [culprits(), developers()],
             to: 'lgswin@gmail.com',
-            replyTo: 'lgswin@gmail.com',
+            replyTo: 'noreply@yourdomain.com',
             subject: "Jenkins Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: "The build failed.\n\nCheck details: ${env.BUILD_URL}"
+            body: """
+            The build failed.
+
+            - Job: ${env.JOB_NAME}
+            - Build Number: ${env.BUILD_NUMBER}
+            - Build URL: ${env.BUILD_URL}
+            - Please check logs for more details.
+            """
         )
     }
 }
