@@ -40,6 +40,19 @@ pipeline {
             }
         }
 
+        stage('Test Email Sending') {
+            steps {
+                script {
+                    echo "Testing email sending..."
+                }
+                emailext (
+                    to: 'lgswin@gmail.com',
+                    subject: "Jenkins Test Email",
+                    body: "This is a manually triggered test email from the Jenkins pipeline."
+                )
+            }
+        }
+
         stage('Teardown') {
             steps {
                 sh '${DOCKER_COMPOSE} down'
