@@ -47,27 +47,31 @@ pipeline {
         }
     }
 
-    post {
-        success {
-            script {
-                echo "Build successful - attempting to send email"
-            }
-            emailext (
-                to: 'lgswin@gmail.com',
-                subject: "Jenkins Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: "The build was successful.\n\nCheck details: ${env.BUILD_URL}"
-            )
+post {
+    success {
+        script {
+            echo "Build successful - attempting to send email"
         }
-
-        failure {
-            script {
-                echo "Build failed - attempting to send email"
-            }
-            emailext (
-                to: 'lgswin@gmail.com',
-                subject: "Jenkins Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: "The build failed.\n\nCheck details: ${env.BUILD_URL}"
-            )
-        }
+        emailext (
+            recipientProviders: [developers()],
+            to: 'lgswin@gmail.com',
+            replyTo: 'lgswin@gmail.com',
+            subject: "Jenkins Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: "The build was successful.\n\nCheck details: ${env.BUILD_URL}"
+        )
     }
+
+    failure {
+        script {
+            echo "Build failed - attempting to send email"
+        }
+        emailext (
+            recipientProviders: [developers()],
+            to: 'lgswin@gmail.com',
+            replyTo: 'lgswin@gmail.com',
+            subject: "Jenkins Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: "The build failed.\n\nCheck details: ${env.BUILD_URL}"
+        )
+    }
+}
 }
