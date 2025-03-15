@@ -45,11 +45,9 @@ pipeline {
                 script {
                     echo "Testing email sending..."
                 }
-                emailext (
-                    to: 'lgswin@gmail.com',
+                emailext body: "This is a manually triggered test email from the Jenkins pipeline.",
                     subject: "Jenkins Test Email",
-                    body: "This is a manually triggered test email from the Jenkins pipeline."
-                )
+                    to: 'lgswin@gmail.com'
             }
         }
 
@@ -65,8 +63,7 @@ post {
         script {
             echo "Build successful - attempting to send email"
         }
-        emailext (
-            recipientProviders: [culprits(), developers()],
+        emailext 
             to: 'lgswin@gmail.com',
             replyTo: 'noreply@yourdomain.com',
             subject: "Jenkins Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
@@ -77,15 +74,13 @@ post {
             - Build Number: ${env.BUILD_NUMBER}
             - Build URL: ${env.BUILD_URL}
             """
-        )
     }
 
     failure {
         script {
             echo "Build failed - attempting to send email"
         }
-        emailext (
-            recipientProviders: [culprits(), developers()],
+        emailext 
             to: 'lgswin@gmail.com',
             replyTo: 'noreply@yourdomain.com',
             subject: "Jenkins Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
@@ -97,7 +92,6 @@ post {
             - Build URL: ${env.BUILD_URL}
             - Please check logs for more details.
             """
-        )
     }
 }
 }
