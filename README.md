@@ -27,6 +27,7 @@ This project is a **full-stack Todo application** built with:
 - Uses **PostgreSQL** as the database.
 - Includes **unit tests** for API functionality.
 - two tests fail  
+
 <img src="https://github.com/user-attachments/assets/6ff2d8b8-b27f-401e-82bc-691eb41f9c63" width="500" alt="unit tests fail">
 
 - if the functionalities are implemented, All tests pass.  
